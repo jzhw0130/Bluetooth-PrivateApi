@@ -32,8 +32,25 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noti:) name:@"ConnectionStatusChanged" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(noti:) name:@"DeviceDisconnectSuccess" object:nil];
     
+    
+    // global notification explorer
+    CFNotificationCenterAddObserver(CFNotificationCenterGetLocalCenter(),
+                                    NULL,
+                                    MyCallBack,
+                                    NULL,
+                                    NULL,
+                                    CFNotificationSuspensionBehaviorDeliverImmediately);
+    
 }
 
+// global notification callback
+void MyCallBack (CFNotificationCenterRef center,
+                 void *observer,
+                 CFStringRef name,
+                 const void *object,
+                 CFDictionaryRef userInfo) {
+    NSLog(@"CFN Name:%@ Data:%@", name, userInfo);
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
